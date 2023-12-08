@@ -16,5 +16,5 @@ mongoose
     console.log(error)
  })
 app.use("/", (req, res) => {
-  res.send("server is going mad running");
+  res.send("HEllo Server is ready");
 });
