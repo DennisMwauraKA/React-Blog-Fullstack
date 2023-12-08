@@ -1,7 +1,20 @@
-const express =require("express");
-const app =express()
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const port = 3000;
 
-app.use('/',(req,res)=>{
-    res.send("server is going mad running")
-})
-app.listen(5000,console.log("Server has started"))
+mongoose
+  .connect(
+    "mongodb+srv://dennismwaura074:Dennis@cluster0.bqjkwle.mongodb.net/?retryWrites=true&w=majority"
+  )
+ .then(()=>{
+    console.log("Connected to MongoDB")
+    app.listen(3000, ()=>{
+        console.log(`Server Running on Port ${port}`)
+    })
+ }).catch((error)=>{
+    console.log(error)
+ })
+app.use("/", (req, res) => {
+  res.send("server is going mad running");
+});
