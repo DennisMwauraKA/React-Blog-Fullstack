@@ -1,29 +1,31 @@
 import React, { useState } from "react";
 
-import axios from 'axios'
+import axios from "axios";
 function Login() {
-  const [email,setEmail] =useState('')
-  const [password,setPassword] =useState('')
-  const  handleLogin = async (ev) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (ev) => {
     ev.preventDefault();
-    const user = {
-      email:email,
-      password:password,
+    const register = {
+      email: email,
+      password: password,
+    };
+    try {
+      const response = await axios.post(
+        "https://vite-deployment-server.vercel.app/register",
+        register
+      );
+      console.log(response);
+      if (response.status === 200) {
+        alert("user registered successfully");
+        setEmail("");
+        setPassword("");
+      } else {
+        alert("Could not register");
+      }
+    } catch (error) {
+      console.log(error);
     }
-   try {
-    const response = await axios.post("https://vite-deployment-server.vercel.app/user",user)
-    console.log(response)
-    if(response.status===200){
-      alert("user registered successfully")
-      setEmail("")
-      setPassword("")
-    }else{
-      alert("Could not register")
-    }
-   } catch (error) {
-    
-   }
-
   };
   return (
     <div className=" w-[100%] h-screen flex justify-center  items-center">
@@ -37,25 +39,30 @@ function Login() {
               Register Account
             </h1>
           </div>
-          
+
           <input
             type="text"
             placeholder="Enter your Email "
             className="outline-none md:w-[50%] w-[90%] p-1 rounded"
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="text"
             placeholder="Enter your Password "
             className="outline-none md:w-[50%]  w-[90%] p-1 rounded"
             value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button onClick={handleLogin} className='bg-white w-[100px] h-[30px] text-xl rounded mt-5'>Login</button>
+        <button
+          onClick={handleLogin}
+          className="bg-white w-[100px] h-[30px] text-xl rounded mt-5"
+        >
+          Register
+        </button>
       </form>
-    </div>   
+    </div>
   );
 }
 

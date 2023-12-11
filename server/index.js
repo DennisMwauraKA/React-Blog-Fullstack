@@ -2,6 +2,10 @@ const express = require("express");
 const cors = require('cors')
 const app = express();
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
 const User = require("./models/userModel");
 const port = 3000;
 
@@ -26,10 +30,12 @@ app.get("/", (req, res) => {
 });
 
 
-app.post("/user", async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = new User({ email, password });
+    const user = new User({ email, password:bcrypt.hash(myPlaintextPassword, saltRounds).then(function(hash) {
+     password,hash
+  }) });
     await user.save();
 
     res.status(200).json({ message: "user saved successfully" });
@@ -38,3 +44,13 @@ app.post("/user", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+app.post('/login',(req,res)=>{
+try {
+  
+} catch (error) {
+  console.log(error);
+  res.status(500).json({message: error.message});
+  
+}
+})
