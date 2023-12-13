@@ -1,28 +1,30 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const secret = "uhuhewhuhwuheuwhwu";
 const User = require("./models/userModel");
-const port = 3000;
+
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({credentials:true,origin:'http://localhost:5173/'}));
 mongoose
-  .connect(
-    "mongodb+srv://dennismwaura074:Dennis@cluster0.bqjkwle.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(MONGO_URL)
   .then(() => {
     console.log("Connected to MongoDB");
-    app.listen(3000, () => {
-      console.log(`Server Running on Port ${port}`);
+    app.listen(PORT, () => {
+      console.log(`Server Started at Port ${PORT}`);
     });
   })
   .catch((error) => {
     console.log(error);
+    process.exit(1); 
   });
 
 app.get("/", (req, res) => {
@@ -46,11 +48,12 @@ app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    const passOk = bcrypt.compareSync(password, user.password);
+    const passOk = bcrypt.compareSync(password, user.password); // comparison of the password saved in the database and the one keyed in
+    // get the id of the user and the email of the user and get the token in return
     if (passOk) {
       jwt.sign({ email, id: user._id }, secret, {}, (err, token) => {
         if (err) throw err;
-        res.json(token);
+        res.cookie('token',token).json('ok');
       });
     } else {
       console.log(error);
@@ -61,3 +64,4 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+app.get()

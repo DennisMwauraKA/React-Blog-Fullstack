@@ -1,32 +1,36 @@
 import React, { useState } from "react";
-
 import axios from "axios";
+import Navigate from "react-router-dom";
 function Login() {
+  const [redirect, setRedirect] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async (ev) => {
     ev.preventDefault();
-    const register = {
+    const login = {
       email: email,
       password: password,
     };
     try {
       const response = await axios.post(
-        "https://vite-deployment-server.vercel.app/register",
-        register
+        "https://vite-deployment-server.vercel.app/login",
+        login,
+        { withCredentials: true }
       );
-      console.log(response);
-      if (response.status === 200) {
-        alert("user registered successfully");
-        setEmail("");
-        setPassword("");
+      if (response.ok) {
+        setRedirect(true);
       } else {
-        alert("Could not register");
+        alert("Check Email and Password to Login");
       }
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (redirect) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <div className=" w-[100%] h-screen flex justify-center  items-center">
       <form
@@ -36,7 +40,7 @@ function Login() {
         <div className="w-[100%] flex flex-col gap-4 items-center ">
           <div>
             <h1 className="text-xl capitalize font-bold text-white">
-              Register Account
+              Login to Your Account
             </h1>
           </div>
 
@@ -59,7 +63,7 @@ function Login() {
           onClick={handleLogin}
           className="bg-white w-[100px] h-[30px] text-xl rounded mt-5"
         >
-          Register
+          Login
         </button>
       </form>
     </div>
