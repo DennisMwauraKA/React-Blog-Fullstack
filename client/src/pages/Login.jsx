@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 function Login() {
   const [redirect, setRedirect] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+const navigate =useNavigate()
   const handleLogin = async (ev) => {
     ev.preventDefault();
     const login = {
@@ -20,9 +21,10 @@ function Login() {
       );
       if (response.ok) {
         setRedirect(true);
-        navigate("/");
+        
       } else {
         alert("Check Email and Password to Login");
+        console.log(response.data.error)
       }
       console.log(response);
     } catch (error) {
@@ -32,6 +34,8 @@ function Login() {
 
 
   return (
+    <>
+    {redirect && navigate("/")}
     <div className=" w-[100%] h-screen flex justify-center  items-center">
       <form
         className="flex flex-col justify-center md:w-[50%] w-[90%] p-5 md:p-0 gap-4 items-center border-red-900 bg-cyan-600 h-[60%] rounded-3xl"
@@ -67,6 +71,7 @@ function Login() {
         </button>
       </form>
     </div>
+    </>
   );
 }
 
