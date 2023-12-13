@@ -13,7 +13,7 @@ const User = require("./models/userModel");
 
 
 app.use(express.json());
-app.use(cors({credentials:true,origin:'http://localhost:5173/'}));
+app.use(cors({credentials:true,origin:'https://vite-deployment-client.vercel.app/'}));
 mongoose
   .connect(MONGO_URL)
   .then(() => {
@@ -63,5 +63,4 @@ app.post("/login", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
-});
-app.get()
+})
