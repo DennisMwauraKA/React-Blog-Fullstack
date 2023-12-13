@@ -13,7 +13,7 @@ const User = require("./models/userModel");
 
 
 app.use(express.json());
-app.use(cors({credentials:true,origin:'https://vite-deployment-client.vercel.app/'}));
+app.use(cors({credentials:true,origin:['https://react-blog-client-omega.vercel.app'||'http://localhost:5173/']}));
 mongoose
   .connect(MONGO_URL)
   .then(() => {
