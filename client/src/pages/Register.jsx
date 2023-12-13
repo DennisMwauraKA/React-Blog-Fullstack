@@ -15,7 +15,7 @@ function Register() {
     };
     try {
       const response = await axios.post(
-        "https://vite-deployment-server.vercel.app/register",
+        "https://react-blog-fullstack.vercel.app/register",
         register
       );
       console.log(response);

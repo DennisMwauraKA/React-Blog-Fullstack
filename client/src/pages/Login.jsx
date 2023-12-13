@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Navigate from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function Login() {
   const [redirect, setRedirect] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const handleLogin = async (ev) => {
     ev.preventDefault();
     const login = {
@@ -13,12 +14,13 @@ function Login() {
     };
     try {
       const response = await axios.post(
-        "https://vite-deployment-server.vercel.app/login",
+        "https://react-blog-fullstack.vercel.app/login",
         login,
         { withCredentials: true }
       );
       if (response.ok) {
         setRedirect(true);
+        navigate("/");
       } else {
         alert("Check Email and Password to Login");
       }
@@ -28,9 +30,7 @@ function Login() {
     }
   };
 
-  if (redirect) {
-    return <Navigate to={"/"} />;
-  }
+
   return (
     <div className=" w-[100%] h-screen flex justify-center  items-center">
       <form
