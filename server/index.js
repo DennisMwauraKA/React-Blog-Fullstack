@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URL;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 const saltRounds = 10;
 const secret = "uhuhewhuhwuheuwhwu";
 const User = require("./models/userModel");
@@ -21,6 +22,7 @@ app.use(
     ],
   })
 );
+app.use(cookieParser());
 mongoose
   .connect(MONGO_URL)
   .then(() => {
@@ -41,10 +43,12 @@ app.get("/", (req, res) => {
 app.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    // check for existing user 
+    // check for existing user
     const existinguser = await User.findOne({ email });
     if (existinguser) {
-      return res.status(404).json({ message: "user already saved in the database" });
+      return res
+        .status(404)
+        .json({ message: "user already saved in the database" });
     }
     // hash the password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -77,4 +81,13 @@ app.post("/login", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
+});
+
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
+  res.json(req.cookies);
 });
