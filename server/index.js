@@ -11,9 +11,16 @@ const saltRounds = 10;
 const secret = "uhuhewhuhwuheuwhwu";
 const User = require("./models/userModel");
 
-
 app.use(express.json());
-app.use(cors({credentials:true,origin:['https://react-blog-client-omega.vercel.app','http://localhost:5173']}));
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      "https://react-blog-client-omega.vercel.app",
+      "http://localhost:5173",
+    ],
+  })
+);
 mongoose
   .connect(MONGO_URL)
   .then(() => {
@@ -24,7 +31,7 @@ mongoose
   })
   .catch((error) => {
     console.log(error);
-    process.exit(1); 
+    process.exit(1);
   });
 
 app.get("/", (req, res) => {
@@ -33,9 +40,13 @@ app.get("/", (req, res) => {
 
 app.post("/register", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const user = new User({ email, password: hashedPassword });
+    const existinguser = await User.findOne({ email });
+    if (existinguser) {
+      res.status(404).json({ message: "user already saved in the database" });
+    }
+    const user = new User({ username, email, password: hashedPassword });
     await user.save();
     res.status(200).json({ message: "user saved successfully" });
   } catch (error) {
@@ -46,14 +57,14 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, username, password } = req.body;
     const user = await User.findOne({ email });
     const passOk = bcrypt.compareSync(password, user.password); // comparison of the password saved in the database and the one keyed in
     // get the id of the user and the email of the user and get the token in return
     if (passOk) {
-      jwt.sign({ email, id: user._id }, secret, {}, (err, token) => {
+      jwt.sign({ username, id: user._id }, secret, {}, (err, token) => {
         if (err) throw err;
-        res.cookie('token',token).json('ok');
+        res.cookie("token", token).json({ username });
       });
     } else {
       console.log(error);
@@ -63,4 +74,4 @@ app.post("/login", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
-})
+});
