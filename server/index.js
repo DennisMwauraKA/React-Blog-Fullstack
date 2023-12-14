@@ -41,11 +41,14 @@ app.get("/", (req, res) => {
 app.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // check for existing user 
     const existinguser = await User.findOne({ email });
     if (existinguser) {
-      res.status(404).json({ message: "user already saved in the database" });
+      return res.status(404).json({ message: "user already saved in the database" });
     }
+    // hash the password
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // creae a  new user
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
     res.status(200).json({ message: "user saved successfully" });
