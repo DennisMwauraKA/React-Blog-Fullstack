@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const handleRegister = async (ev) => {
     ev.preventDefault();
     const register = {
       email: email,
       password: password,
+      username:username
     };
     try {
       const response = await axios.post(
@@ -20,9 +22,10 @@ function Register() {
       );
       console.log(response);
       if (response.status === 200 || 201) {
-        alert(`Hello  ${email} account registered Succesfully`);
+        alert(`Hello  ${username} account registered Succesfully`);
         setEmail("");
         setPassword("");
+        setUsername("");
       } else {
         alert("Could not register");
       }
@@ -43,7 +46,13 @@ function Register() {
               Register Account
             </h1>
           </div>
-
+          <input
+            type="text"
+            placeholder="Enter your Username "
+            className="outline-none md:w-[50%] w-[90%] p-1 rounded"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <input
             type="text"
             placeholder="Enter your Email "
@@ -52,7 +61,7 @@ function Register() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            type="text"
+            type="password"
             placeholder="Enter your Password "
             className="outline-none md:w-[50%]  w-[90%] p-1 rounded"
             value={password}

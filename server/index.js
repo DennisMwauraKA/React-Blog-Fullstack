@@ -84,10 +84,19 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  const {token} =req.cookies;
-  jwt.verify(token,secret,{},(err,info)=>{
-if (err) throw err;
-res.json(info)
-  })
-  res.json(req.cookies);
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) {
+      // Handle the error, for example, send a 401 Unauthorized response
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    // Token is valid, you can now send the user information
+    res.json(info);
+  });
 });
