@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-
 import axios from "axios";
-import { Link } from "react-router-dom";
-
-
+import { toast } from "react-toastify";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,33 +10,28 @@ function Register() {
     const register = {
       email: email,
       password: password,
-      username:username
+      username: username,
     };
     try {
       const response = await axios.post(
-        "https://react-blog-server-seven.vercel.app/register",
+        " http://localhost:3000/api/register",
         register
       );
       console.log(response);
       if (response.status === 200 || 201) {
-        alert(`Hello  ${username} account registered Succesfully`);
+        toast.success(` Registration Successful`)
         setEmail("");
         setPassword("");
         setUsername("");
-      } else {
-        alert("Could not register");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error); 
+      toast.error(`Dear ${username},Registration Failed,Please Try Again `)
     }
   };
   return (
-  
     <div className=" w-[100%] h-screen flex justify-center  items-center">
-      <form
-        className="flex flex-col justify-center md:w-[50%] w-[90%] p-5 md:p-0 gap-4 items-center border-red-900 bg-cyan-600 h-[60%] rounded-3xl"
-     
-      >
+      <form className="flex flex-col justify-center md:w-[50%] w-[90%] p-5 md:p-0 gap-4 items-center border-red-900 bg-cyan-600 h-[60%] rounded-3xl">
         <div className="w-[100%] flex flex-col gap-4 items-center ">
           <div>
             <h1 className="text-xl capitalize font-bold text-white">
@@ -74,10 +66,8 @@ function Register() {
         >
           Register
         </button>
-
       </form>
     </div>
-    
   );
 }
 

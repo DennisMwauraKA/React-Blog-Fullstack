@@ -1,16 +1,17 @@
-import React from 'react'
-import Header from '../pages/Header'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import Header from "../components/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Outlet } from "react-router-dom";
 
-
-function MainLayout({children}) {
+function MainLayout() {
   return (
     <main>
-
-      <Header/>
-     <Outlet/>
+      <Header />
+      <Outlet />
+      <ToastContainer />
     </main>
-  )
+  );
 }
 
-export default MainLayout
+export default MainLayout;

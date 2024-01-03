@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import Swal from 'sweetalert2';
+import { toast } from "react-toastify";
 
 function Login() {
   const [redirect, setRedirect] = useState(false);
@@ -15,31 +14,25 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://react-blog-server-seven.vercel.app/login",
+        "http://localhost:3000/api/login",
         { email, password },
         { withCredentials: true }
       );
 
       if (response.status === 200) {
-      
         toast.success(`Logged in  successfully`);
         setRedirect(true);
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged in successfully',
-        });
-        navigate('/');
+
+        navigate("/");
       } else {
-   alert("Check Credentials")
+        toast.error(`Internal server error. Please try again later.`);
       }
     } catch (error) {
-      console.error("Error:", error.message || error);
-     
-      toast.error('Error during login. Please try again.');
+      console.error(error);
+
+      toast.error("Invalid credentials!! Please try again");
     }
   };
-
-
 
   return (
     <>
@@ -58,13 +51,13 @@ function Login() {
 
             <input
               type="text"
-              placeholder="Enter your Email "
+              placeholder="Enter your email"
               className="outline-none md:w-[50%] w-[90%] p-1 rounded"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
-              type="password" 
+              type="password"
               placeholder="Enter your Password "
               className="outline-none md:w-[50%]  w-[90%] p-1 rounded"
               value={password}
