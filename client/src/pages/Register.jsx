@@ -14,7 +14,7 @@ function Register() {
     };
     try {
       const response = await axios.post(
-        " http://localhost:3000/api/register",
+        " https://react-blog-server-seven.vercel.app/api/register",
         register
       );
       console.log(response);
