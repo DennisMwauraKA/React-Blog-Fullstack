@@ -21,8 +21,7 @@ function Header() {
       });
 
       if (response.status === 200) {
-        const {id,token} =response.data
-        console.log("token",token)
+       
         setInfo(response.data.id);
         setAuthenticated(true);
       } else {
