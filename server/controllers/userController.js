@@ -16,7 +16,7 @@ const createLogin = async (req, res) => {
       jwt.sign({ email, id: user._id }, secret, {}, (err, token) => {
         if (err) throw err;
         res
-          .cookie("token", token, { sameSite: "lax" })
+          .cookie("token", token, { sameSite: "none" })
           .json({ email, id: user._id });
       });
     } else {
