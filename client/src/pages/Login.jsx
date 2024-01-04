@@ -14,9 +14,9 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/login",
+        "https://react-blog-server-seven.vercel.app/api/login",
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true, credentials:"include" }
       );
       console.log(response.data);
       if (response.status === 200) {

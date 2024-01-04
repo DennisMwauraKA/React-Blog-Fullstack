@@ -16,7 +16,7 @@ function Header() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/profile", {
+      const response = await axios.get("https://react-blog-server-seven.vercel.app/api/profile", {
         withCredentials: true,
       });
 
