@@ -23,7 +23,7 @@ function PostPage() {
   const fetchById = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/get-posts/${id}`
+        `https://react-blog-server-seven.vercel.app/api/get-posts/${id}`
       );
       setPost(response.data);
       setLoading(false); 
@@ -36,7 +36,7 @@ function PostPage() {
   const deletePost = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/delete-posts/${id}`
+        `https://react-blog-server-seven.vercel.app/api/delete-posts/${id}`
       );
       setRemove(true);
       navigate("/");
@@ -83,7 +83,7 @@ function PostPage() {
         {!loading && post && (
           <div>
             <img
-              src={`http://localhost:3000/${post.file}`}
+              src={`https://react-blog-server-seven.vercel.app/${post.file}`}
               className="w-[500px] h-[200px] cursor-pointer"
               alt={post.title}
             />

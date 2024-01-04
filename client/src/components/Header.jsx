@@ -40,7 +40,7 @@ function Header() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:3000/api/logout",
+        "https://react-blog-server-seven.vercel.app/api/logout",
         {},
         {
           withCredentials: true,

@@ -9,7 +9,7 @@ function HomePage() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/get-posts");
+        const response = await axios.get("https://react-blog-server-seven.vercel.app/api/get-posts");
         setPosts(response.data);
       } catch (error) {
         console.log("Unable to fetch Your Posts", error);
@@ -26,7 +26,7 @@ function HomePage() {
             <div className="flex items-center gap-10">
               <div className="mb-4">
                 <img
-                  src={`http://localhost:3000/${post.file}`}
+                  src={`https://react-blog-server-seven.vercel.app/${post.file}`}
                   className="w-[300px] h-[200px] cursor-pointer"
                   alt={post.title}
                 />

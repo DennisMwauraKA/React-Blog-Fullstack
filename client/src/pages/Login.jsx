@@ -14,11 +14,11 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://react-blog-server-seven.vercel.app/api/login",
+        "http://localhost:3000/api/login",
         { email, password },
         { withCredentials: true }
       );
-
+      console.log(response.data);
       if (response.status === 200) {
         toast.success(`Logged in  successfully`);
         setRedirect(true);
