@@ -25,6 +25,7 @@ const uploadMiddleware = multer({ storage: storage }).single("file");
 const createPost = async (req, res) => {
   try {
     const { token } = req.cookies;
+    res.header('Access-Control-Allow-Origin', 'https://react-blog-client-omega.vercel.app');
 
     if (!token) {
       console.log("No token found in cookies");
