@@ -45,14 +45,11 @@ function CreatePost() {
         { withCredentials: true }
       );
       console.log(data);
-      const { token, message } = response.data;
+      
       if (response.status === 200) {
-        
-        
-          toast.success("Post created Successfuly");
-          setRedirect(true);
-          navigate("/");
-        
+        toast.success("Post created Successfuly");
+        setRedirect(true);
+        navigate("/");
       }
     } catch (error) {
       setRedirect(false);
