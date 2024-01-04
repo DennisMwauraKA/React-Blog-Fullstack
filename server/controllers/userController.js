@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const secret = "jsonsecret";
+const secret = process.env.SECRET_KEY;;
 
 // login controller
 

@@ -1,10 +1,14 @@
 require("dotenv").config();
+const express =require("express")
 const multer = require("multer");
 const fs = require("fs");
 const striptags = require("striptags");
 const Post = require("../models/postModel");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET_KEY;
+const app = express();
+const cors = require("cors")
+app.use(cors())
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const uploadPath = "./uploads"; // Relative path to the project root
