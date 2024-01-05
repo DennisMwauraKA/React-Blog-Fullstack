@@ -4,11 +4,11 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path= require('path')
-
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))) // serve static files to the react app
+
 app.use(
   cors({
     credentials: true,
@@ -29,7 +29,7 @@ const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/createPostRoute");
 const getPostRoute = require("./routes/getPostsRoute");
 const deletePostRoute =require("./routes/deletePostRoute");
-
+// Middle wares
 
 
 
