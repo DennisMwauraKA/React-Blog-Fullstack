@@ -29,7 +29,7 @@ const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/createPostRoute");
 const getPostRoute = require("./routes/getPostsRoute");
 const deletePostRoute =require("./routes/deletePostRoute");
-// Middle wares
+
 
 
 
