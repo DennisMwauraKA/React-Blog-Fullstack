@@ -4,16 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path= require('path')
-//Database Configs
-const PORT = process.env.PORT || 3000;
-const MONGO_URL = process.env.MONGO_URL;
 
-// routes
-const userRoute = require("./routes/userRoute");
-const postRoute = require("./routes/createPostRoute");
-const getPostRoute = require("./routes/getPostsRoute");
-const deletePostRoute =require("./routes/deletePostRoute");
-// Middle wares
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -23,12 +14,24 @@ app.use(
     credentials: true,
     origin: [
       "https://react-blog-client-omega.vercel.app",
-      "http://localhost:5173",
+      "http://localhost:5173" ,
     ],
     allowedHeaders: ["Authorization", "Content-Type"],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
   })
 );
+//Database Configs
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL;
+
+// routes
+const userRoute = require("./routes/userRoute");
+const postRoute = require("./routes/createPostRoute");
+const getPostRoute = require("./routes/getPostsRoute");
+const deletePostRoute =require("./routes/deletePostRoute");
+
+
+
 
 // api routes
 app.use("/api", userRoute);
