@@ -12,7 +12,8 @@ app.use(cors({
    origin:[
     'https://react-blog-client-omega.vercel.app',
     "http://localhost:5173" 
-  ]
+  ],
+  methods: 'POST',
 }
  
 ))
