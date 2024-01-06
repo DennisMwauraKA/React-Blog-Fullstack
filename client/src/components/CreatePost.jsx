@@ -42,11 +42,11 @@ function CreatePost() {
       const response = await axios.post(
         "https://react-blog-server-seven.vercel.app/api/create-post",
         data,
-        {mode:'cors'},
-        { withCredentials: true }
+
+        { withCredentials: true, mode: "cors" }
       );
       console.log(data);
-      
+
       if (response.status === 200) {
         toast.success("Post created Successfuly");
         setRedirect(true);

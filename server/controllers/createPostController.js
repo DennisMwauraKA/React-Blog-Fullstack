@@ -1,22 +1,12 @@
 require("dotenv").config();
-const express =require("express")
+const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
 const striptags = require("striptags");
 const Post = require("../models/postModel");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET_KEY;
-const app = express();
-const cors = require("cors")
-app.use(cors({
-   origin:[
-    'https://react-blog-client-omega.vercel.app',
-    "http://localhost:5173" 
-  ],
-  methods: 'POST',
-}
- 
-))
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const uploadPath = "./uploads"; // Relative path to the project root
@@ -33,7 +23,6 @@ const uploadMiddleware = multer({ storage: storage }).single("file");
 const createPost = async (req, res) => {
   try {
     const { token } = req.cookies;
-   
 
     if (!token) {
       console.log("No token found in cookies");
@@ -44,7 +33,7 @@ const createPost = async (req, res) => {
         .status(400)
         .json({ error: "No file received in the request." });
     }
-    
+
     const { originalname, path } = req.file;
     console.log("Received file:", originalname);
     const { title, summary, content } = req.body;
@@ -56,13 +45,11 @@ const createPost = async (req, res) => {
         summary,
         content: strippedContent,
         file: path,
-        author:info.id,
+        author: info.id,
       });
       await createDoc.save();
-          res.status(200).json(createDoc);
+      res.status(200).json(createDoc);
     });
-
-
   } catch (error) {
     console.error("Error creating post:", error);
     res.status(500).json({ error: "Internal server error" });
