@@ -40,7 +40,7 @@ function CreatePost() {
     data.set("content", content);
     try {
       const response = await axios.post(
-        "https://react-blog-server-seven.vercel.ap/api/create-post",
+        "https://react-blog-server-seven.vercel.app/api/create-post",
         data,
         {mode:'cors'},
         { withCredentials: true }
