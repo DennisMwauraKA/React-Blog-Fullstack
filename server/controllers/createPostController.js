@@ -1,5 +1,5 @@
 require("dotenv").config();
-const express = require("express");
+
 const multer = require("multer");
 const fs = require("fs");
 const striptags = require("striptags");
@@ -9,7 +9,7 @@ const secret = process.env.SECRET_KEY;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const uploadPath = "./uploads"; // Relative path to the project root
+    const uploadPath = "./uploads"; 
     fs.mkdirSync(uploadPath, { recursive: true });
     cb(null, uploadPath);
   },
@@ -37,7 +37,7 @@ const createPost = async (req, res) => {
     const { originalname, path } = req.file;
     console.log("Received file:", originalname);
     const { title, summary, content } = req.body;
-    const strippedContent = striptags(content); // this will remove the html tags from the body content
+    const strippedContent = striptags(content); // this will remove the html tags from the  content
     jwt.verify(token, secret, {}, async (err, info) => {
       if (err) throw err;
       const createDoc = new Post({

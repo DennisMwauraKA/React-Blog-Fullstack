@@ -40,10 +40,10 @@ function CreatePost() {
     data.set("content", content);
     try {
       const response = await axios.post(
-        "https://react-blog-server-seven.vercel.app/api/create-post",
+        "http://localhost:3000/api/create-post",
         data,
 
-        { withCredentials: true, mode: "cors" }
+        { withCredentials: true,}
       );
       console.log(data);
 

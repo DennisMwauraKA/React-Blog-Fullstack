@@ -39,6 +39,7 @@ function PostPage() {
         `https://react-blog-server-seven.vercel.app/api/delete-posts/${id}`
       );
       setRemove(true);
+    
       navigate("/");
     } catch (error) {
       toast.error("Unable to delete the post");
