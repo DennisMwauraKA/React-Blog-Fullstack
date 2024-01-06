@@ -7,16 +7,7 @@ const Post = require("../models/postModel");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET_KEY;
 const app = express();
-const cors = require("cors")
-app.use(cors({
-   origin:[
-    'https://react-blog-client-omega.vercel.app',
-    "http://localhost:5173" 
-  ],
-  methods: 'POST',
-}
- 
-))
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const uploadPath = "./uploads"; // Relative path to the project root
