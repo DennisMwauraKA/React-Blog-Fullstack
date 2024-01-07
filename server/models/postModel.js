@@ -18,7 +18,7 @@ const postSchema = mongoose.Schema(
 
     file: {
       type: String,
-      required: true,
+      
     },
     author: {
       type: ObjectId,
