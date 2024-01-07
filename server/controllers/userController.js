@@ -32,7 +32,7 @@ const createLogin = async (req, res) => {
 const createRegister = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    // check for existing user
+
     const existinguser = await User.findOne({ email });
     if (existinguser) {
       return res

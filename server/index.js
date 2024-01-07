@@ -7,7 +7,7 @@ const path= require('path')
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))) // serve static files to the react app
+
 
 app.use(
   cors({
@@ -20,6 +20,10 @@ app.use(
     methods: ['GET','HEAD','PUT','PATCH','POST','DELETE'],
   })
 );
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))) // serve static files to the react app
+
+
+
 //Database Configs
 const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URL;

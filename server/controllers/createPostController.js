@@ -1,9 +1,8 @@
 require("dotenv").config();
-
+const Post = require("../models/postModel");
 const multer = require("multer");
 const fs = require("fs");
 const striptags = require("striptags");
-const Post = require("../models/postModel");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET_KEY;
 
