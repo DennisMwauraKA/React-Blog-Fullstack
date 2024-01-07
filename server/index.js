@@ -3,26 +3,23 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const path= require('path')
+const path = require("path");
 const app = express();
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 
 app.use(
   cors({
     credentials: true,
     origin: [
       "https://react-blog-client-omega.vercel.app",
-      "http://localhost:5173" ,
+      "http://localhost:5173",
     ],
     allowedHeaders: ["Authorization", "Content-Type"],
-    methods: ['GET','HEAD','PUT','PATCH','POST','DELETE'],
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   })
 );
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))) // serve static files to the react app
-
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // serve static files to the react app
 
 //Database Configs
 const PORT = process.env.PORT || 3000;
@@ -32,16 +29,13 @@ const MONGO_URL = process.env.MONGO_URL;
 const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/createPostRoute");
 const getPostRoute = require("./routes/getPostsRoute");
-const deletePostRoute =require("./routes/deletePostRoute");
-
-
-
+const deletePostRoute = require("./routes/deletePostRoute");
 
 // api routes
 app.use("/api", userRoute);
 app.use("/api", postRoute);
 app.use("/api", getPostRoute);
-app.use("/api",deletePostRoute);
+app.use("/api", deletePostRoute);
 mongoose
   .connect(MONGO_URL)
   .then(() => {
@@ -59,5 +53,3 @@ mongoose
 app.get("/", (req, res) => {
   res.send("Welcome to BLOG Server API");
 });
-
-
